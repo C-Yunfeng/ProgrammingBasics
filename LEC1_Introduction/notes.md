@@ -1,0 +1,8 @@
+- 思想
+  - Scalability
+  - Consistency
+- MapReduce
+- 答疑
+  - 降低网络传输消耗
+  - GFS自动存储
+  - Shuffle?
