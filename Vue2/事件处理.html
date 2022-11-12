@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件处理</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <button @click="showInfo($event,666)">click on me</button>
+        <button @click="plusOne">plus one</button>
+        <p>count is {{count}}</p>
+        first name:<input type="text" v-model="firstName"><br>
+        last name:<input type="text" v-model="lastName"><br>
+        full name:<span>{{getFullName()}}</span><br>
+        computed full name:<span>{{computedFullName}}</span>
+    </div>
+    <script type="text/javascript">
+        const vm = new Vue({
+            el:'#root',
+            data:{
+                name:'cyf',
+                count:0,
+                firstName:'Alex',
+                lastName:'John'
+            },
+            computed:{
+                computedFullName:{
+                    get(){
+                        console.log('get was called.')
+                        return this.firstName+this.lastName
+                    },
+                    set(value){
+                        console.log('set was called.')
+                        const arr = value.split('-')
+                        this.firstName = arr[0]
+                        this.lastName = arr[1]
+                    }
+                }
+            },
+            methods:{
+                showInfo(event,number){
+                    console.log(number)
+                    alert('alert...')
+                },
+                plusOne(){
+                    this.count+=1
+                },
+                getFullName(){
+                    return this.firstName.slice(0,3) + '-' + this.lastName
+                }
+            }
+        })
+    </script>
+</body>
+</html>

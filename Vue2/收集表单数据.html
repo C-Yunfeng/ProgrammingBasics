@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>收集表单数据</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <form @submit.prevent="submit">
+            Account:<input type="text" v-model.trim="userInfo.account"><br>
+            Password:<input type="password" v-model="userInfo.password"><br>
+            Gender:
+            Male:<input type="radio"  v-model="userInfo.gender" value="male">
+            Female:<input type="radio"  v-model="userInfo.gender" value="female">
+            <br>
+            Age:<input type="number" v-model.number="userInfo.age">
+            <br>
+            Hobby:
+            Sing<input type="checkbox" v-model="userInfo.hobby" value="sing">
+            Dance<input type="checkbox" v-model="userInfo.hobby" value="dance">
+            Rap<input type="checkbox" v-model="userInfo.hobby"value="rap">
+            <br></br>
+            OtherInfo:
+            <textarea v-model.lazy="userInfo.lazy"></textarea><br>
+            <input type="checkbox" v-model="userInfo.sAgree">Read and accept<a href="www.baidu.com">User protocol</a>
+            <button>submit</button>
+        </form>
+    </div>
+</body>
+
+<script type="text/javascript">
+    Vue.config.productionTip=false
+    new Vue({
+        el:'#root',
+        data:{
+            userInfo:{
+                account:'',
+                password:'',
+                gender:'female',
+                hobby:[],
+                sAgree:'',
+                other:''
+            }
+        },
+        methods:{
+            submit(){
+                console.log(this.userInfo)
+                // console.log(JSON.stringify(this._data))
+            }
+        }
+    })
+</script>
+</html>

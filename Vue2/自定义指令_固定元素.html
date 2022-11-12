@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>固定元素</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h3>Scroll down...</h3>
+        <p v-pin:[direction]="myPx">This element was pinned.</p>
+        <h3 :style="{opacity}">splash</h3>
+        <button @click="stop">stop</button>
+    </div>
+</body>
+<script type="text/javascript">
+    Vue.productionTip=false
+    new Vue({
+        el:'#root',
+        data:{
+            opacity:1,
+            myPx:200,
+            direction:'left'
+        },
+        methods:{
+            stop(){
+                this.$destroy()
+            }
+        },
+        mounted(){
+            console.log('mounted...',this)
+            this.myTimer = setInterval(()=>{
+                this.opacity-=0.01
+                if(this.opacity<=0){
+                    this.opacity=1
+                }
+            },16)
+        },
+        beforeDestroy(){
+            console.log('beforeDestroyed...')
+            clearInterval(this.myTimer)
+        },
+        directives:{
+            'pin'(ele,binding,vnode){
+                ele.style.position='fixed'
+                var s=(binding.arg === 'left'?'left':'top')
+                ele.style[s]=binding.value+'px'
+            }
+        }
+
+    })
+</script>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>filter list</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <input type="text" placeholder="pls enter name" v-model="keyWord">
+        <button @click="ascend">ascend</button>
+        <ul>
+            <li v-for="(p,index) in filPersons" :key="index">
+                {{p.pid}}-{{p.pname}}
+            </li>
+        </ul>
+    </div>
+</body>
+
+<script type="text/javascript">
+    const vm = new Vue({
+        el:'#root',
+        data:{
+            keyWord:'',
+            persons:[
+                {pid:'001',pname:'Alex'},
+                {pid:'002',pname:'Steve'}
+            ]
+        },
+        computed:{
+            filPersons(){
+                return this.persons.filter((p)=>{
+                    return p.pname.indexOf(this.keyWord) !==-1
+                })
+            }
+        },
+        methods:{
+            ascend(){
+                return this.filPersons().sort()
+            }
+        }
+
+    })
+</script>
+</html>
