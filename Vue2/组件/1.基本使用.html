@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基本使用</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+    </div>
+</body>
+<script type="text/javascript">
+    const student = Vue.extend({
+        name:'student',
+        template:`
+            <div>
+                <p>name:{{name}}</p>
+                <p>age:{{age}}</p>
+            </div>
+        `,
+        data(){
+            return{
+              name:'Alex',
+              age:20
+            }
+        }
+    })
+
+    const school = Vue.extend({
+        name:'school',
+        template:`
+            <div>
+                <p>name:{{name}}</p>
+                <p>address:{{address}}</p>
+                <student></student>
+            </div>
+        `,
+        data(){
+            return {
+                name:'University',
+                address:'Alaska'
+            }
+        },
+        components:{
+            student:student
+        }
+    })
+
+    const app = Vue.extend({
+        template:`
+            <div>
+              <school></school>
+            </div>
+        `,
+        components:{
+            school
+        }
+    })
+
+
+    new Vue({
+        template:'<app></app>',
+        el:'#root',
+        components:{app}
+    })
+</script>
+</html>
