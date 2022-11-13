@@ -33,12 +33,18 @@
                 <p>name:{{name}}</p>
                 <p>address:{{address}}</p>
                 <student></student>
+                <button @click="showName">show school name</button>
             </div>
         `,
         data(){
             return {
-                name:'University',
+                name:'University of Business and Economy',
                 address:'Alaska'
+            }
+        },
+        methods:{
+            showName(){
+                console.log(this.name,this)
             }
         },
         components:{
@@ -47,6 +53,7 @@
     })
 
     const app = Vue.extend({
+        name:'app',
         template:`
             <div>
               <school></school>
@@ -57,8 +64,10 @@
         }
     })
 
+    console.log('@',app)
 
-    new Vue({
+
+    const vm = new Vue({
         template:'<app></app>',
         el:'#root',
         components:{app}
