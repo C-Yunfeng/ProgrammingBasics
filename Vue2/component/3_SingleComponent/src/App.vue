@@ -1,20 +1,19 @@
 <template>
   <div>
-    <img src="./assets/logo.png" alt="logo">
-    <MySchool></MySchool>
-    <MyStudent></MyStudent>
+    <Student name="Alex" :age="18"></Student>
   </div>
 </template>
 
 <script>
-import MySchool from './components/MySchool'
-import MyStudent from './components/MyStudent'
-
-export default {
-  name: "App",
-  components:{
-    MySchool,
-    MyStudent
+  import Student from "@/components/Student";
+  export default {
+    name: "App",
+    components:{
+      Student,
+    },
   }
-}
 </script>
+
+<style scoped>
+
+</style>
