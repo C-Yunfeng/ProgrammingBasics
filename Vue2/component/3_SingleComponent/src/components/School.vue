@@ -1,18 +1,18 @@
 <template>
   <div>
     <button @click="showName">name:{{name}}</button>
-    <h2>age:{{age}}</h2>
+    <h2>address:{{address}}</h2>
   </div>
 </template>
 
 <script>
   export default {
-    name:'Student',
+    name:'School',
     data(){
       console.log(this)
       return {
-        name:'Alex',
-        age:18
+        name:'UIBE',
+        address:'BeiJing'
       }
     },
     methods:{
