@@ -2,9 +2,17 @@
   <div id="root">
     <div class="todo-container">
       <div class="todo-wrap">
-        <MyHeader :createItem="createItem"></MyHeader>
-        <MyList :todos="todos"></MyList>
-        <MyFooter></MyFooter>
+        <MyHeader :itemCreated="createItem"></MyHeader>
+        <MyList
+            :todos="todos"
+            :checkItem="checkItem"
+            :deleteItem="deleteItem">
+        </MyList>
+        <MyFooter
+            :todos="todos"
+            :checkAllItem="checkAllItem"
+            :clearAllItem="clearAllItem">
+        </MyFooter>
       </div>
     </div>
   </div>
@@ -30,6 +38,24 @@
     methods:{
       createItem(item){
         this.todos.unshift(item)
+      },
+      checkItem(id){
+        this.todos.forEach((x)=>{
+          if(x.id===id) x.done=!x.done
+        })
+      },
+      deleteItem(id){
+        this.todos=this.todos.filter(todo=>todo.id!==id)
+      },
+      checkAllItem(done){
+        this.todos.forEach((x)=>{
+          x.done = done
+        })
+      },
+      clearAllItem(){
+        this.todos = this.todos.filter((todo)=>{
+          return !todo.done
+        })
       }
     }
   }
