@@ -2,8 +2,8 @@
   <div id="root">
     <div class="todo-container">
       <div class="todo-wrap">
-        <MyHeader></MyHeader>
-        <MyList></MyList>
+        <MyHeader :createItem="createItem"></MyHeader>
+        <MyList :todos="todos"></MyList>
         <MyFooter></MyFooter>
       </div>
     </div>
@@ -17,9 +17,21 @@
 
   export default {
     name: "App",
-    components:{
-      MyFooter,MyList,MyHeader
+    components:{MyFooter,MyList,MyHeader},
+    data(){
+      return {
+        todos:[
+          {id:'001',title:'吃饭',done:true},
+          {id:'002',title:'睡觉',done:false},
+          {id:'003',title:'打豆豆',done:true},
+        ]
+      }
     },
+    methods:{
+      createItem(item){
+        this.todos.unshift(item)
+      }
+    }
   }
 </script>
 
