@@ -28,11 +28,8 @@
     components:{MyFooter,MyList,MyHeader},
     data(){
       return {
-        todos:[
-          {id:'001',title:'吃饭',done:true},
-          {id:'002',title:'睡觉',done:false},
-          {id:'003',title:'打豆豆',done:true},
-        ]
+        // 方法1：watch实现
+        todos:JSON.parse(localStorage.getItem('todosKey')) || []
       }
     },
     methods:{
@@ -56,6 +53,15 @@
         this.todos = this.todos.filter((todo)=>{
           return !todo.done
         })
+      }
+    },
+    // 方法1：watch实现
+    watch:{
+      todos:{
+        deep:true,
+        handler(newV){
+          localStorage.setItem('todosKey',JSON.stringify(newV))
+        }
       }
     }
   }

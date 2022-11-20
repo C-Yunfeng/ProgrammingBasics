@@ -1017,7 +1017,7 @@ module.exports = {
    	if(to.meta.title){ 
    		document.title = to.meta.title //修改网页的title
    	}else{
-   		document.title = 'vue_test'
+   		document.title = '02_vue_test_cyf'
    	}
    })
    ```
