@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import Student from "@/components/Student";
+  import Student from "@/components/MyStudent";
   export default {
     name: "App",
     components:{

@@ -7,8 +7,8 @@
 </template>
 
 <script>
-  import Student from "@/components/Student";
-  import School from "@/components/School";
+  import Student from "@/components/MyStudent";
+  import School from "@/components/MySchool";
   export default {
     name: "App",
     components:{
