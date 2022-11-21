@@ -37,6 +37,7 @@
 				// this.$off() //解绑所有的自定义事件
 			},
 			death(){
+        // Tip:Vue3中不让调用destory了
 				this.$destroy() //销毁了当前Student组件的实例，销毁后所有Student实例的自定义事件全都不奏效。
 			}
 		},

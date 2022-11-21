@@ -9,7 +9,9 @@
 		<!-- <MyStudent @atguigu="getStudentName" @demo="m1"/> -->
 
 		<!-- 通过父组件给子组件绑定一个自定义事件实现：子给父传递数据（第二种写法，使用ref） -->
-		<MyStudent ref="student" @click.native="show"/>
+		<MyStudent ref="student"/>
+    <!--组件绑定原生DMOM事件-->
+		<!--<MyStudent ref="student" @click.native="show"/>-->
 	</div>
 </template>
 
@@ -42,6 +44,9 @@
 			}
 		},
 		mounted() {
+      // 谁触发的atguigu事件，则this指向谁
+      // 或者把getStudentName写成箭头函数，则会往外找this到App
+      // 此处this本应为MyStudent，但getStudentName为当前组件APP中的methods的函数，所以覆盖调了
 			this.$refs.student.$on('atguigu',this.getStudentName) //绑定自定义事件
 			// this.$refs.student.$once('atguigu',this.getStudentName) //绑定自定义事件（一次性）
 		},
