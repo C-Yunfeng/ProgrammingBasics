@@ -15,10 +15,4 @@ new Vue({
 	el:'#app',
 	render: h => h(App),
 	// VM原型的东西在此时添加
-	beforeCreate() {
-		// this为当前VM
-		// 安装全局事件总线.给程序员的一般加$符号
-		Vue.prototype.$bus = this
-		// Vue.prototype.x = this
-	}
 })
