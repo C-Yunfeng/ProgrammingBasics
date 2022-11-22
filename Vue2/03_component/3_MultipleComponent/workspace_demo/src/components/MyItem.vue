@@ -6,9 +6,17 @@
       即如果v-model绑定的是简单变量（非对象），则会报错-->
       <!--<input type="checkbox" v-model="todoData.done"/>-->
       <input type="checkbox" :checked="todoData.done" @change="handleCheck(todoData.id)"/>
-      <span>{{ todoData.title }}</span>
+      <span v-show="!todoData.isEdit">{{ todoData.title }}</span>
+      <input
+          type="text"
+          v-show="todoData.isEdit"
+          :value="todoData.title"
+          @blur="handleBlur(todoData,$event)"
+          ref="inputTitle"
+      >
     </label>
     <button class="btn btn-danger" @click="handleDelete(todoData.id)">删除</button>
+    <button v-show="!todoData.isEdit" class="btn btn-edit" @click="handleEdit(todoData)">编辑</button>
   </li>
 </template>
 
@@ -25,7 +33,27 @@
         if(confirm('Are you sure?')){
           this.$bus.$emit('deleteItem',id)
         }
+      },
+      handleEdit(todoData){
+        if(Object.prototype.hasOwnProperty.call(todoData,'isEdit')===true){
+          todoData.isEdit = true
+        }else{
+          this.$set(todoData,'isEdit',true)
+        }
+        // 先执行下一行再重新解析模板，input还没出现。所以不能直接这样写（TODO：可以写到updated里）
+        // this.$refs.inputTitle.focus()
+        // 或者可以写定时器，设置时间为0
+        // 或者用nextTick
+        this.$nextTick(function(){
+          this.$refs.inputTitle.focus()
+        })
+      },
+      handleBlur(todoData,e){
+        todoData.isEdit=false
+        if(!e.target.value.trim()) return alert('输入不能为空!')
+        this.$bus.$emit('updateItem',todoData.id,e.target.value)
       }
+
     }
   }
 </script>
