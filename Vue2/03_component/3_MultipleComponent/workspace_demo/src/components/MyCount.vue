@@ -14,7 +14,7 @@
 
 <script>
   export default {
-    name: "MyCategory",
+    name: "MyCount",
     props:['title'],
     data(){
       return {

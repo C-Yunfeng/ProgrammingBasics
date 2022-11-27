@@ -12,6 +12,7 @@ const actions={
     //     console.log('plus of actions was called...')
     //     context.commit('PLUS',value)
     // },
+    // 不要在commit里直接操作state，因为devtool捕获不到
     // minus(context,value){
     //     // 此处的函数名一般写成大写，表示mutations里的
     //     console.log('minus of actions was called...')
@@ -22,7 +23,6 @@ const actions={
         console.log('plusOdd of actions was called...')
         context.commit('PLUSODD',value)
     },
-
 
 }
 const mutations={
