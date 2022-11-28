@@ -2,6 +2,7 @@
   "dependencies": {
     "animate.css": "^4.1.1",
     "mitt": "^3.0.0",
-    "nanoid": "^4.0.0"
+    "nanoid": "^4.0.0",
+    "vue-router": "^3.6.5"
   }
 }
