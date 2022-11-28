@@ -1,8 +1,9 @@
 import VueRouter from 'vue-router'
 import MyAbout from '../components/MyAbout'
 import MyHome from '../components/MyHome'
-import MyMessage from "../components/MyHome/MyMessage";
-import MyNews from "../components/MyHome/MyNews";
+import MyMessage from "../components/MyMessage";
+import MyNews from "../components/MyNews";
+import MyDetail from "../components/MyDetail";
 
 export default new VueRouter({
     routes:[
@@ -16,7 +17,13 @@ export default new VueRouter({
             children:[
                 {
                     path:'message',
-                    component:MyMessage
+                    component:MyMessage,
+                    children:[
+                        {
+                            path:'detail',
+                            component:MyDetail
+                        }
+                    ]
                 },
                 {
                     path:'news',
