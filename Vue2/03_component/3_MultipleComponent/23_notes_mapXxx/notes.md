@@ -1,0 +1,15 @@
+### VueX
+- getters
+  - $store.getters.largeNum（类似于computed）
+- mapState
+  - 利用mapState生成计算属性
+  - 对象写法：`...mapState(he:'sum',xuexiao:'school')`
+      - [展开运算符](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Spread_syntax)
+  - 数组写法：要确保计算属性名与state中属性名相同。`...mapGetters(['sum','school'])`
+- mapGetters
+- mapMutations
+  - 生成对应的方法，方法会调用commit取联系mutations
+  - `...mapMutations({increment:'plus',decrement:'minus'})`
+  - 数组写法可读性差，不推荐使用
+- mapActions
+  - 生成对应的方法，方法会调用dispatch取联系actions
