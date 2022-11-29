@@ -1,9 +1,12 @@
 <template>
   <ul>
     <li v-for="m in messageList" :key="m.id">
+      <!--参数写法-->
+      <!--<router-link :to="`/home/message/detail/666/hello`">{{m.title}}}</router-link>-->
+      <!--对象写法-->
       <router-link :to="{
-        path:'/home/message/detail',
-        query:{
+        name:'detail',
+        params:{
           id:m.id,
           title:m.title
         }
