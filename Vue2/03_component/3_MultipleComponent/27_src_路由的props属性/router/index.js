@@ -23,6 +23,8 @@ export default new VueRouter({
                             name:'detail',
                             path:'detail',
                             component:MyDetail,
+                            // props布尔值写法，只支持params
+                            // props:true
                             // props函数写法
                             props($route){
                                 return{

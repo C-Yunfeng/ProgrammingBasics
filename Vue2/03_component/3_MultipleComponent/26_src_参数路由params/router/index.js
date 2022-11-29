@@ -21,15 +21,8 @@ export default new VueRouter({
                     children:[
                         {
                             name:'detail',
-                            path:'detail',
-                            component:MyDetail,
-                            // props函数写法
-                            props($route){
-                                return{
-                                    id:$route.query.id,
-                                    title:$route.query.title
-                                }
-                            }
+                            path:'detail/:id/:title',
+                            component:MyDetail
                         }
                     ]
                 },
