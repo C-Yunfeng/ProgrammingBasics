@@ -10,7 +10,7 @@
           <router-link class="list-group-item" active-class="active" to="/home/message">Message</router-link>
         </li>
       </ul>
-      <!--缓存路由-->
+      <!--commit:缓存路由-->
       <keep-alive include="MyNews">
         <router-view></router-view>
       </keep-alive>

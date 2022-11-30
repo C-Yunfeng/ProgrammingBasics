@@ -15,6 +15,7 @@
         opacity:1
       }
     },
+    // commit
     activated() {
       console.log('News组件被激活了')
       this.timer = setInterval(() => {

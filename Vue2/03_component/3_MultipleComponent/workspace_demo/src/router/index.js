@@ -5,24 +5,31 @@ import MyMessage from "../pages/MyMessage";
 import MyNews from "../pages/MyNews";
 import MyDetail from "../pages/MyDetail";
 
-export default new VueRouter({
+const router = new VueRouter({
     routes:[
         {
+            name:'guanyu',
             path:'/about',
-            component:MyAbout
+            component:MyAbout,
+            meta:{title:'关于'}
         },
         {
+            name:'zhuye',
             path:'/home',
             component:MyHome,
+            meta:{isAuth:false,title:'主页'},
             children:[
                 {
+                    name:'xinxi',
                     path:'message',
                     component:MyMessage,
+                    meta:{isAuth:true,title:'信息'},
                     children:[
                         {
                             name:'detail',
                             path:'detail',
                             component:MyDetail,
+                            meta:{isAuth:true,title:'详情'},
                             // props函数写法
                             props($route){
                                 return{
@@ -34,10 +41,34 @@ export default new VueRouter({
                     ]
                 },
                 {
+                    name:'xinwen',
                     path:'news',
-                    component:MyNews
+                    component:MyNews,
+                    meta:{isAuth:true,title:'新闻'},
                 }
             ]
         },
     ]
 })
+
+// commit全局守卫路由
+router.beforeEach((to,from,next)=>{
+    if(to.meta.isAuth===true){
+    // if(to.name==='xinxi' || to.path==='xinwen'){
+    // if(to.path==='/home/news' || to.path==='/home/message'){
+        if(localStorage.getItem('name')==='Alex'){
+            next()
+        }else {
+            alert('Only Alex could visit.')
+        }
+    }else {
+        next()
+    }
+})
+
+router.afterEach((to,from)=>{
+    console.log(to,from)
+    document.title=to.meta.title || '硅谷系统'
+})
+
+export default router
