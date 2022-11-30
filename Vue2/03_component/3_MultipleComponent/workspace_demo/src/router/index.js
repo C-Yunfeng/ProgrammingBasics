@@ -11,7 +11,7 @@ const router = new VueRouter({
             name:'guanyu',
             path:'/about',
             component:MyAbout,
-            meta:{title:'关于'}
+            meta:{isAuth:true,title:'关于'}
         },
         {
             name:'zhuye',
@@ -46,17 +46,17 @@ const router = new VueRouter({
                     component:MyNews,
                     meta:{isAuth:true,title:'新闻'},
                     // commit独享路由守卫。只有前置，没有后置
-                    beforeEnter:(to, from, next)=>{
-                        if(to.meta.isAuth===true){
-                            if(localStorage.getItem('name')==='Alex'){
-                                next()
-                            }else {
-                                alert('Only Alex could visit.')
-                            }
-                        }else {
-                            next()
-                        }
-                    }
+                    // beforeEnter:(to, from, next)=>{
+                    //     if(to.meta.isAuth===true){
+                    //         if(localStorage.getItem('name')==='Alex'){
+                    //             next()
+                    //         }else {
+                    //             alert('Only Alex could visit.')
+                    //         }
+                    //     }else {
+                    //         next()
+                    //     }
+                    // }
                 }
             ]
         },
@@ -79,7 +79,7 @@ const router = new VueRouter({
 // })
 
 router.afterEach((to,from)=>{
-    console.log(to,from)
+    console.log('###afterEach',to,from)
     document.title=to.meta.title || '硅谷系统'
 })
 
