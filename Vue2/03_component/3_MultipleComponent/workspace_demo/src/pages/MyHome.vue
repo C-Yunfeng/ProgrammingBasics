@@ -10,15 +10,18 @@
           <router-link class="list-group-item" active-class="active" to="/home/message">Message</router-link>
         </li>
       </ul>
-      <router-view></router-view>
+      <!--缓存路由-->
+      <keep-alive include="MyNews">
+        <router-view></router-view>
+      </keep-alive>
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: "MyHome"
-}
+  export default {
+    name: "MyHome"
+  }
 </script>
 
 <style scoped>
