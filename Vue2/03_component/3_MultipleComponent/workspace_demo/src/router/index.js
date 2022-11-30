@@ -6,6 +6,7 @@ import MyNews from "../pages/MyNews";
 import MyDetail from "../pages/MyDetail";
 
 const router = new VueRouter({
+    mode:'history',
     routes:[
         {
             name:'guanyu',
