@@ -45,6 +45,18 @@ const router = new VueRouter({
                     path:'news',
                     component:MyNews,
                     meta:{isAuth:true,title:'新闻'},
+                    // commit独享路由守卫。只有前置，没有后置
+                    beforeEnter:(to, from, next)=>{
+                        if(to.meta.isAuth===true){
+                            if(localStorage.getItem('name')==='Alex'){
+                                next()
+                            }else {
+                                alert('Only Alex could visit.')
+                            }
+                        }else {
+                            next()
+                        }
+                    }
                 }
             ]
         },
@@ -52,19 +64,19 @@ const router = new VueRouter({
 })
 
 // commit全局守卫路由
-router.beforeEach((to,from,next)=>{
-    if(to.meta.isAuth===true){
-    // if(to.name==='xinxi' || to.path==='xinwen'){
-    // if(to.path==='/home/news' || to.path==='/home/message'){
-        if(localStorage.getItem('name')==='Alex'){
-            next()
-        }else {
-            alert('Only Alex could visit.')
-        }
-    }else {
-        next()
-    }
-})
+// router.beforeEach((to,from,next)=>{
+//     if(to.meta.isAuth===true){
+//     // if(to.name==='xinxi' || to.path==='xinwen'){
+//     // if(to.path==='/home/news' || to.path==='/home/message'){
+//         if(localStorage.getItem('name')==='Alex'){
+//             next()
+//         }else {
+//             alert('Only Alex could visit.')
+//         }
+//     }else {
+//         next()
+//     }
+// })
 
 router.afterEach((to,from)=>{
     console.log(to,from)
