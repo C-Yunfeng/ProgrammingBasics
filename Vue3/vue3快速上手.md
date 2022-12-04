@@ -526,6 +526,29 @@ TODO: 此章节跳过
 <div style="width:300px;height:370px;overflow:hidden;float:left">
     <img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e5ac7e20d1784887a826f6360768a368~tplv-k3u1fbpfcp-watermark.image" style="zoom:50%;width:560px;left" /> 
 </div>
+  
+
+  
+
+   
+
+  
+
+  
+
+   
+
+   
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -564,6 +587,29 @@ TODO: 此章节跳过
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # 五、新的组件
 
 ## 1.Fragment
@@ -576,8 +622,12 @@ TODO: 此章节跳过
 
 - 什么是Teleport？—— `Teleport` 是一种能够将我们的<strong style="color:#DD5145">组件html结构</strong>移动到指定位置的技术。
 
+  > - 要是自己封装组件库的话就知道这个多好用了(很多组件库用了这个东西)
+  > - fixed定位的缺点: 实际应用中，父级元素可能会开启定位，如果开启定位并设置大小后，最终效果就不一定了。
+  
   ```vue
   <teleport to="移动位置">
+    <!--mask遮罩-->
   	<div v-if="isShow" class="mask">
   		<div class="dialog">
   			<h3>我是一个弹窗</h3>
@@ -586,19 +636,30 @@ TODO: 此章节跳过
   	</div>
   </teleport>
   ```
+  
+  > 可以使dialog和app平级, 避免应为干扰
+  >
+  > ![image-20221204224842119](assets/vue3快速上手/image-20221204224842119.png)
 
 ## 3.Suspense
 
 - 等待异步组件时渲染一些额外内容，让应用有更好的用户体验
+
+  > 说实话,异步组件,就是把组件单独打包,再用jsonp的方式加载执行. 但是一般做的都是系统管理系统,都是内网,速读不必担心.没必要用异步组件
 
 - 使用步骤：
 
   - 异步引入组件
 
     ```js
+    // 静态引入
+    import Child from './components/Child'
+    // 动态引入
     import {defineAsyncComponent} from 'vue'
     const Child = defineAsyncComponent(()=>import('./components/Child.vue'))
     ```
+
+    但这样问题时, 部分组件没有渲染, 会影响整体结构
 
   - 使用```Suspense```包裹组件，并配置好```default``` 与 ```fallback```
 
@@ -617,6 +678,14 @@ TODO: 此章节跳过
     	</div>
     </template>
     ```
+
+- 用途:
+
+  > Promise是es6的异步解决方案，能避免回调地狱的产生
+  >
+  > 等待axios的数据回来
+  >
+  > await类似于then的效果，拿到了正确的返回结果
 
 # 六、其他
 
