@@ -104,6 +104,9 @@ npm run dev
 
 ## 1.拉开序幕的setup
 
+> - 3.2后 可以不需要setup了
+> - 这种方式vue2底层也是基于组合式实现的，看源码就知道了
+
 1. 理解：Vue3.0中一个新的配置项，值为一个函数。
 2. setup是所有<strong style="color:#DD5145">Composition API（组合API）</strong><i style="color:gray;font-weight:bold">“ 表演的舞台 ”</i>。
 4. 组件中所用到的：数据、方法等等，均要配置在setup中。
@@ -119,22 +122,39 @@ npm run dev
 
 ##  2.ref函数
 
+> - 一个网页大多数数据都不是响应式，vue2中把data的数据都设置成了响应式
+> - 类似于vue2的$set()，手动添加响应监控
+
 - 作用: 定义一个响应式的数据
+
 - 语法: ```const xxx = ref(initValue)``` 
   - 创建一个包含响应式数据的<strong style="color:#DD5145">引用对象（reference对象，简称ref对象）</strong>。
   - JS中操作数据： ```xxx.value```
   - 模板中读取数据: 不需要.value，直接：```<div>{{xxx}}</div>```
+  
 - 备注：
   - 接收的数据可以是：基本类型、也可以是对象类型。
+  
   - 基本类型的数据：响应式依然是靠``Object.defineProperty()``的```get```与```set```完成的。
+  
   - 对象类型的数据：内部 <i style="color:gray;font-weight:bold">“ 求助 ”</i> 了Vue3.0中的一个新函数—— ```reactive```函数。
+  
+    > - 数据劫持才是响应式的根基
+    > - Proxy是ES6的新api，可以拦截对象的很多操作，包括调用，new等等操作，很强
 
 ## 3.reactive函数
 
 - 作用: 定义一个<strong style="color:#DD5145">对象类型</strong>的响应式数据（基本类型不要用它，要用```ref```函数）
+
 - 语法：```const 代理对象= reactive(源对象)```接收一个对象（或数组），返回一个<strong style="color:#DD5145">代理对象（Proxy的实例对象，简称proxy对象）</strong>
+
 - reactive定义的响应式数据是“深层次的”。
+
 - 内部基于 ES6 的 Proxy 实现，通过代理对象操作源对象内部数据进行操作。
+
+  > Vue2是getter和setter, Vue3是Proxy
+  >
+  > ![image-20221204163744032](assets/vue3快速上手/image-20221204163744032.png)
 
 ## 4.Vue3.0中的响应式原理
 
@@ -160,7 +180,13 @@ npm run dev
 
 - 实现原理: 
   - 通过Proxy（代理）:  拦截对象中任意属性的变化, 包括：属性值的读写、属性的添加、属性的删除等。
+  
+    > ![image-20221204171144411](assets/vue3快速上手/image-20221204171144411.png)
+  
   - 通过Reflect（反射）:  对源对象的属性进行操作。
+  
+    > 框架封装时, Reflect比Object更好用, 省去了try catch, 提高了健壮性
+  
   - MDN文档中描述的Proxy与Reflect：
     - Proxy：https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy
     
