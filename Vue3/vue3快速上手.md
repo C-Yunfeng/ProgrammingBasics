@@ -185,7 +185,7 @@ npm run dev
   
   - 通过Reflect（反射）:  对源对象的属性进行操作。
   
-    > 框架封装时, Reflect比Object更好用, 省去了try catch, 提高了健壮性
+    > 框架封装时, Reflect比Object更好用, 省去了try catch, 提高了
   
   - MDN文档中描述的Proxy与Reflect：
     - Proxy：https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy
@@ -226,7 +226,12 @@ npm run dev
 
 ## 6.setup的两个注意点
 
+- slot
+  
+  > - 插槽给封装组件库的大佬用的
+  
 - setup执行的时机
+  
   - 在beforeCreate之前执行一次，this是undefined。
   
 - setup的参数
@@ -250,7 +255,8 @@ npm run dev
   
   setup(){
       ...
-  	//计算属性——简写
+  	  //计算属性——简写
+      // 只能实现getter
       let fullName = computed(()=>{
           return person.firstName + '-' + person.lastName
       })
@@ -275,6 +281,10 @@ npm run dev
 - 两个小“坑”：
 
   - 监视reactive定义的响应式数据时：oldValue无法正确获取、强制开启了深度监视（deep配置失效）。
+  
+    > - 一切的一切都是Proxy代理对象的特性;应该没办法改了,除非watch底层开一个新空间专门做中转变量存旧值(还不能是proxy);
+    > - 这个是语言底层问题，对象属性用的堆内存改栈太耗性能了
+  
   - 监视reactive定义的响应式数据中某个属性时：deep配置有效。
   
   ```js
@@ -289,7 +299,7 @@ npm run dev
   }) 
   
   /* 情况三：监视reactive定义的响应式数据
-  			若watch监视的是reactive定义的响应式数据，则无法正确获得oldValue！！
+  			若watch监视的是reactive定义的响应式数据，则无法正确获得oldValue！！(无法获取)
   			若watch监视的是reactive定义的响应式数据，则强制开启了深度监视 
   */
   watch(person,(newValue,oldValue)=>{
@@ -318,7 +328,9 @@ npm run dev
 
 - watchEffect的套路是：不用指明监视哪个属性，监视的回调中用到哪个属性，那就监视哪个属性。
 
-- watchEffect有点像computed：
+  > - 这个就是用Dep劫持了get和set方法，get中收集依赖，set中notify
+
+- `!!!watchEffect有点像computed`：
 
   - 但computed注重的计算出来的值（回调函数的返回值），所以必须要写返回值。
   - 而watchEffect更注重的是过程（回调函数的函数体），所以不用写返回值。
@@ -331,6 +343,8 @@ npm run dev
       console.log('watchEffect配置的回调执行了')
   })
   ```
+  
+  > 用途如: 发起报销流程, 发送Ajax请求
 
 ## 8.生命周期
 
