@@ -775,6 +775,7 @@ TODO: 此章节跳过
     ```vue
     <script>
       export default {
+        // 指定为自定义事件, 没指定为原生事件
         emits: ['close']
       }
     </script>
