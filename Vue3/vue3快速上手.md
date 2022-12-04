@@ -348,45 +348,8 @@ npm run dev
 
 ## 8.生命周期
 
-<div style="border:1px solid black;width:380px;float:left;margin-right:20px;"><strong>vue2.x的生命周期</strong><img src="https://cn.vuejs.org/images/lifecycle.png" alt="lifecycle_2" style="zoom:33%;width:1200px" /></div><div style="border:1px solid black;width:510px;height:985px;float:left"><strong>vue3.0的生命周期</strong><img src="https://v3.cn.vuejs.org/images/lifecycle.svg" alt="lifecycle_2" style="zoom:33%;width:2500px" /></div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-1
+- https://v2.cn.vuejs.org/images/lifecycle.png
+- https://cn.vuejs.org/assets/lifecycle.16e4c08e.png
 
 - Vue3.0中可以继续使用Vue2.x中的生命周期钩子，但有有两个被更名：
   - ```beforeDestroy```改名为 ```beforeUnmount```
@@ -405,7 +368,12 @@ npm run dev
 
 - 什么是hook？—— 本质是一个函数，把setup函数中使用的Composition API进行了封装。
 
-- 类似于vue2.x中的mixin。
+  > - 为什么叫hook，因为它在js的function里用了vue的API，和原生js封装方法不一样
+  > - vue2的mixin里面并不能写vue的api，就是个单纯的js文件，除非引入整个vue2但太大了
+
+- 类似于vue2.x中的mixin
+
+  > - 相对于mixin 数据来源更清晰 还可以有效避免命名重复问题
 
 - 自定义hook的优势: 复用代码, 让setup中的逻辑更清楚易懂。
 
@@ -414,14 +382,23 @@ npm run dev
 ## 10.toRef
 
 - 作用：创建一个 ref 对象，其value值指向另一个对象中的某个属性。
+
+  > 简化template中插值语法的写法
+
 - 语法：```const name = toRef(person,'name')```
+
+  > toRef和ref的区别: toRef是引用,ref是复制一个
+
 - 应用:   要将响应式对象中的某个属性单独提供给外部使用时。
 
 
-- 扩展：```toRefs``` 与```toRef```功能一致，但可以批量创建多个 ref 对象，语法：```toRefs(person)```
+- 扩展：```toRefs``` 与```toRef```功能一致，但可以批量创建多个 ref 对象，语法：```...toRefs(person)```
 
+  > ...toRefs()只能解构第一层. 因此在插值与法中只能用第一层的属性
 
 # 三、其它 Composition API
+
+TODO: 此章节跳过
 
 ## 1.shallowReactive 与 shallowRef
 
