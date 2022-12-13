@@ -7,6 +7,7 @@
 - [x] AJAX基础(20221212-20221213)
 - [ ] Webpack基础
 - [ ] axios基础
+- [ ] promise基础
 - [ ] export default命令
 - [ ] select表单如何优化? 初始化提示?
 - [ ] 熟悉element-ui组件

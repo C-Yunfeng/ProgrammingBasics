@@ -1,5 +1,5 @@
 <template>
-  <p>home</p>
+  <p>search</p>
 </template>
 
 <script>

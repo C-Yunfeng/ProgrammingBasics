@@ -7,8 +7,9 @@
           <p>尚品汇欢迎您！</p>
           <p>
             <span>请</span>
-            <a href="###">登录</a>
-            <a href="###" class="register">免费注册</a>
+            <router-link to="/login">Login</router-link>
+            <span> | </span>
+            <router-link to="/register">Register</router-link>
           </p>
         </div>
         <div class="typeList">
@@ -33,17 +34,21 @@
       <div class="searchArea">
         <form action="###" class="searchForm">
           <input type="text" id="autocomplete" class="input-error input-xxlarge" />
-          <button class="sui-btn btn-xlarge btn-danger" type="button">搜索</button>
+          <button class="sui-btn btn-xlarge btn-danger" type="button" @click="goSearch">搜索</button>
         </form>
       </div>
     </div>
   </header>
-
 </template>
 
 <script>
 export default {
-  name: "index"
+  name: "index",
+  methods:{
+    goSearch(){
+      this.$router.push('/search')
+    }
+  }
 }
 </script>
 

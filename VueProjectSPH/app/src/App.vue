@@ -1,8 +1,10 @@
 <template>
   <div id="app">
     <Header></Header>
-    <p>hello world</p>
-    <Footer></Footer>
+    <router-view></router-view>
+    <Footer
+        v-if="$route.path=='/home'||$route.path=='/search'"
+    ></Footer>
   </div>
 </template>
 
