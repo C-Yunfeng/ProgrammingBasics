@@ -43,7 +43,7 @@
 
 <script>
 export default {
-  name: "index",
+  name: "Header",
   methods:{
     goSearch(){
       this.$router.push('/search')

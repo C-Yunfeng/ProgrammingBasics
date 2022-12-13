@@ -3,7 +3,7 @@
     <Header></Header>
     <router-view></router-view>
     <Footer
-        v-if="$route.path=='/home'||$route.path=='/search'"
+        v-if="$route.path=='/Home'||$route.path=='/SearchSearch'"
     ></Footer>
   </div>
 </template>
@@ -16,7 +16,7 @@ export default {
   name: 'App',
   components: {
     Header,
-    Footer
+    Footer,
   }
 }
 </script>
