@@ -1,4 +1,0 @@
-- [Copper Basin](https://www.youtube.com/watch?v=B6gKyQc8qC4)
-  - so off we went
-  - lost my drone
-  - love chopping wood
