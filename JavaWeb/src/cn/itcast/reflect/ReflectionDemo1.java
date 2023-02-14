@@ -8,7 +8,7 @@ import cn.itcast.junit.Calculator;
 // 反射的应用：
 // 1.确定不下来使用哪个类的时候，如开发一个通用工具类，为了达到通用性，传入的参数对象一般是无法限制的，这时候就需要用到反射。
 // 2.编辑器的提示，允许在编码时就能获取类，而非运行时。编码->编译->编码，所以称反射。
-// 反射的优点：允许程序创建和控制任何类的对象，无需提前硬编码目标类。
+// 反射的优点：允许程序创建和控制任何类的对象，无需提前硬编码目标类。而且可以不用导入包。
 public class ReflectionDemo1 {
     public static void main(String[] args) throws ClassNotFoundException {
         // 同一个字节码文件在一次运行过程中，只会被加载一次
