@@ -35,15 +35,56 @@
             <option>10</option>
             <option>11</option>
             <option>12</option>
-        </select>
+        </select><br>
+        <h3>Data Type</h3>
+        <button onclick="printDate()">print date...</button><br>
+        <h3>BOM</h3>
+        <button onclick="myPromt()">test promt...</button><br>
+        <button onclick="printHistory()">print history</button><br>
+        <button onclick="getHref()">get href</button><br>
+        <!--TODO:这个方法为什么没用呢?-->
+        <button onclick="goHref()">go my github(button tag)</button><br>
+        <input type="button" id="goHref2" value="go my github(input tag)"><br>
+        <h3>Case: go home</h3>
+        <input type="button" id="goH" onclick="goHome()" value="go home"><br>
 
-        <button onclick="printDate()">print date...</button>
+
     </form>
     <script type="text/javascript">
         let printDate = function (){
             let sjrq = new Date();
             console.log(sjrq.toLocaleDateString());
         }
+        let myPromt = function (){
+            prompt('test promt...')
+        }
+        let printHistory = function (){
+            console.log(window.history)
+        }
+        let getHref = function (){
+            alert(location.href)
+        }
+        let goHref = function(){
+            location.href = "https://github.com/C-Yunfeng"
+        }
+        goHref2.onclick = function (){
+            location.href = "https://github.com/C-Yunfeng"
+        }
+        function sleep(ms){
+            return new Promise(resolve => setTimeout(resolve,ms))
+        }
+        let goHome = function (){
+            let lastSecond = 5
+            let goH = document.getElementById("goH");
+            while (lastSecond>=0){
+                goH.innerHTML = lastSecond +""
+                lastSecond--
+                console.log(lastSecond)
+                setTimeout(function (){},1000)
+            }
+            location.href = "https://github.com/C-Yunfeng"
+        }
+
     </script>
 </body>
 </html>
