@@ -19,7 +19,6 @@ public class ReflectionAnnotation {
             public String methodName(){
                 return "show";
             }
-
         }
         */
         //3.调用注解对象中定义的抽象方法，获取返回值
