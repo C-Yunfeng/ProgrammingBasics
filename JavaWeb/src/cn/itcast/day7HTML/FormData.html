@@ -5,37 +5,45 @@
     <title>FormData</title>
 </head>
 <body>
-<form action="#" method="get">
-    <h1>input</h1>
-    <h3>HTML</h3>
-    <!-- label标签包住文字,可以用for属性实现点击自动对焦 -->
-    <label for="myUsername">Username-with-label</label><br>
-    Username: <input name="username" placeholder="Please type your account" id="myUsername"><br>
-    Password: <input name="password"><br>
-    <input type="submit" value="Login in"><br>
+    <form action="#" method="get">
+        <h1>input</h1>
+        <h3>HTML</h3>
+        <!-- label标签包住文字,可以用for属性实现点击自动对焦 -->
+        <label for="myUsername">Username-with-label</label><br>
+        Username: <input name="username" placeholder="Please type your account" id="myUsername"><br>
+        Password: <input name="password"><br>
+        <input type="submit" value="Login in"><br>
 
-    <h3>HTML5</h3>
-    <!--加上name属性才会被当作表单项提交-->
-    Birthday: <input type="date" name="birthday"><br>
-    Age: <input type="number" name="age"><br>
+        <h3>HTML5</h3>
+        <!--加上name属性才会被当作表单项提交-->
+        Birthday: <input type="date" name="birthday"><br>
+        Age: <input type="number" name="age"><br>
 
-    <h1>select</h1>
-    Month:
-    <select name="month">
-        <option>--pls select--</option>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-        <option>6</option>
-        <option>7</option>
-        <option>8</option>
-        <option>9</option>
-        <option>10</option>
-        <option>11</option>
-        <option>12</option>
-    </select>
-</form>
+        <h1>select</h1>
+        Month:
+        <select name="month">
+            <option>--pls select--</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
+        </select>
+
+        <button onclick="printDate()">print date...</button>
+    </form>
+    <script type="text/javascript">
+        let printDate = function (){
+            let sjrq = new Date();
+            console.log(sjrq.toLocaleDateString());
+        }
+    </script>
 </body>
 </html>
