@@ -3,6 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          version="5.0">
+
+    <!-- 浏览器无法直接访问/WEB-INF里的资源,因此不要把静态资源放到该目录 -->
+
     <!-- <servlet> -->
     <!--     <servlet-name>demo1</servlet-name> -->
     <!--     <servlet-class>cn.itcast.day13_tomcat.ServletDemo1</servlet-class> -->
