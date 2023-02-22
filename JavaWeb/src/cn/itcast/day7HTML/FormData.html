@@ -11,45 +11,44 @@
         <!-- label标签包住文字,可以用for属性实现点击自动对焦 -->
         <label for="myUsername">Username-with-label</label><br>
         Username: <input name="username" placeholder="Please type your account" id="myUsername"><br>
-        Password: <input name="password"><br>
+        Password: <input name="password"  id="myPassword" onblur="checkPassword()"><br>
+        Age: <input type="number" name="age" id="myAge" onblur="checkAge()"><br>
         <input type="submit" value="Login in"><br>
-
-        <h3>HTML5</h3>
-        <!--加上name属性才会被当作表单项提交-->
-        Birthday: <input type="date" name="birthday"><br>
-        Age: <input type="number" name="age"><br>
-
-        <h1>select</h1>
-        Month:
-        <select name="month">
-            <option>--pls select--</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-            <option>6</option>
-            <option>7</option>
-            <option>8</option>
-            <option>9</option>
-            <option>10</option>
-            <option>11</option>
-            <option>12</option>
-        </select><br>
-        <h3>Data Type</h3>
-        <button onclick="printDate()">print date...</button><br>
-        <h3>BOM</h3>
-        <button onclick="myPromt()">test promt...</button><br>
-        <button onclick="printHistory()">print history</button><br>
-        <button onclick="getHref()">get href</button><br>
-        <!--TODO:这个方法为什么没用呢?-->
-        <button onclick="goHref()">go my github(button tag)</button><br>
-        <input type="button" id="goHref2" value="go my github(input tag)"><br>
-        <h3>Case: go home</h3>
-        <input type="button" id="goH" onclick="goHome()" value="go home"><br>
-
-
     </form>
+
+    <h3>HTML5</h3>
+    <!--加上name属性才会被当作表单项提交-->
+    Birthday: <input type="date" name="birthday"><br>
+
+    <h1>select</h1>
+    Month:
+    <select name="month">
+        <option>--pls select--</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+        <option>8</option>
+        <option>9</option>
+        <option>10</option>
+        <option>11</option>
+        <option>12</option>
+    </select><br>
+    <h3>Data Type</h3>
+    <button onclick="printDate()">print date...</button><br>
+    <h3>BOM</h3>
+    <button onclick="myPromt()">test promt...</button><br>
+    <button onclick="printHistory()">print history</button><br>
+    <button onclick="getHref()">get href</button><br>
+    <!--TODO:这个方法为什么没用呢?-->
+    <button onclick="goHref()">go my github(button tag)</button><br>
+    <input type="button" id="goHref2" value="go my github(input tag)"><br>
+    <h3>Case: go home</h3>
+    <input type="button" id="goH" onclick="goHome()" value="go home"><br>
+
     <script type="text/javascript">
         let printDate = function (){
             let sjrq = new Date();
@@ -84,7 +83,27 @@
             }
             location.href = "https://github.com/C-Yunfeng"
         }
+        let checkAge = function (){
+            // get element
+            let myAge = document.getElementById("myAge").value
+            // reg
+            const regex = /\d{0,3}/g
+            // alert
+            if (regex.test(myAge)){
+                console.log('ok')
+            }else {
+                alert('false')
+            }
+        }
 
+        let checkPassword = function (){
+            let myPassword = document.getElementById("myPassword").value
+            // 至少八个字符，至少一个字母和一个数字：
+            const regex = /^[A-Za-z0-9]+$/g
+            console.log(regex.test(myPassword))
+            return regex.test(myPassword)?true:false
+        }
+        
     </script>
 </body>
 </html>
