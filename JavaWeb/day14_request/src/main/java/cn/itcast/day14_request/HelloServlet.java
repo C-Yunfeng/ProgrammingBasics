@@ -25,6 +25,8 @@ public class HelloServlet extends HttpServlet {
         // 权限控制框架时有用
         System.out.println("------URI:" + request.getRequestURI());
         System.out.println("------URL:" + request.getRequestURL());
+
+        System.out.println("------IP:" + request.getRemoteHost());
     }
 
     public void destroy() {
