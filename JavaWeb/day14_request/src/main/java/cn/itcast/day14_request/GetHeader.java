@@ -1,14 +1,18 @@
 package cn.itcast.day14_request;
 
+import com.sun.org.apache.xpath.internal.objects.XNull;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
+import java.io.BufferedReader;
 import java.io.IOException;
 
 @WebServlet(name = "GetHeader", value = "/GetHeader")
 public class GetHeader extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // 获取请求头
         String agent = request.getHeader("user-agent");
         if(agent.contains("Chrome")){
             System.out.println("This is Chrome.");
@@ -21,6 +25,12 @@ public class GetHeader extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        // 获取请求体
+        // 1.获取字符流
+        BufferedReader br = request.getReader();
+        String line = null;
+        while ((line = br.readLine())!=null){
+            System.out.println(line);
+        }
     }
 }
