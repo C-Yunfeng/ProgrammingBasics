@@ -27,6 +27,8 @@ public class GetHeader extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // 当tomcat版本小于8时,post时中文会乱码,需要设置流的字符集
+        request.setCharacterEncoding("utf-8");
         // 获取请求体
         // 1.获取字符流
         BufferedReader br = request.getReader();
