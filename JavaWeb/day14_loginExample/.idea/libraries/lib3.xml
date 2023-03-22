@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="lib3">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../day14_login/out/artifacts/day14_login/WEB-INF/lib/commons-beanutils-1.8.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../day14_login/out/artifacts/day14_login/WEB-INF/lib/druid-1.0.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../day14_login/out/artifacts/day14_login/WEB-INF/lib/mchange-commons-java-0.2.12.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../day14_login/out/artifacts/day14_login/WEB-INF/lib/commons-logging-1.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
