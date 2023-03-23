@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="exploded-war" name="day14_login">
-    <output-path>$PROJECT_DIR$/out/artifacts/day14_login</output-path>
-    <root id="root">
-      <element id="dir-copy" path="$PROJECT_DIR$/web" />
-    </root>
-  </artifact>
-</component>

@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="day14_login:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/day14_login_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="day14_login" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="lib1" />
+          <element id="library" level="project" name="alibaba.druid" />
+          <element id="library" level="project" name="junit.jupiter" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="day14_login/web/Web" />
+    </root>
+  </artifact>
+</component>

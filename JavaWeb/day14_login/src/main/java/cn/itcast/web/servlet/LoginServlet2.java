@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "loginServlet2",value = "/loginServlet2")
+@WebServlet(name = "loginServlet2",urlPatterns = "/loginServlet2")
 public class LoginServlet2 extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
