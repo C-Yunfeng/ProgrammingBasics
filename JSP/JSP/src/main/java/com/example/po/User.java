@@ -1,9 +1,13 @@
 package com.example.po;
 
+/**
+ * User实体类
+ */
 public class User {
     private Integer userId;
     private String userName;
     private String userPwd;
+    private Integer userAge;
 
     public User() {
     }
@@ -12,6 +16,21 @@ public class User {
         this.userId = userId;
         this.userName = userName;
         this.userPwd = userPwd;
+    }
+
+    public User(Integer userId, String userName, String userPwd, Integer userAge) {
+        this.userId = userId;
+        this.userName = userName;
+        this.userPwd = userPwd;
+        this.userAge = userAge;
+    }
+
+    public Integer getUserAge() {
+        return userAge;
+    }
+
+    public void setUserAge(Integer userAge) {
+        this.userAge = userAge;
     }
 
     public Integer getUserId() {
