@@ -15,6 +15,7 @@
           <input type="text" name="user">用户名</br>
           <input type="password" name="password">密码</br>
           <button>提交</button>
+          <%--获取后台显示到数据,并展示--%>
           <span style="color: red;font-size: 12px"><%=request.getAttribute("msg")%></span>
       </form>
     </body>
