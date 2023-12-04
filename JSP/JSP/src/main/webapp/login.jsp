@@ -21,10 +21,10 @@
 
         <%--对登陆参数进行前端校验--%>
         <div style="text-align: center">
-            <form action="/login" method="post" id="loginForm">
-                用户:<input type="text" name="uname" id="uname"> </br>
-                密码:<input type="password" name="upwd" id="upwd"> </br>
-                <span id="msg" style="color: red;font-size: 12px"></span>
+            <form action="login" method="post" id="loginForm">
+                用户:<input type="text" name="uname" id="uname" value="${messageModel.object.userName}"> </br>
+                密码:<input type="password" name="upwd" id="upwd" value="${messageModel.object.userPwd}"> </br>
+                <span id="msg" style="color: red;font-size: 12px">${messageModel.msg}</span>
                 <button id="loginBtn">登陆</button>
                 <button>注册</button>
             </form>
