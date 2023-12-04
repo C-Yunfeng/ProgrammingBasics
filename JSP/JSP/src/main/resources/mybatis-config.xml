@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 引用db.properties配置文件 -->
+    <properties resource="mysql.properties"></properties>
+    <!--
+        development:开发模式
+        work:工作模式
+     -->
+    <!-- <typeAliases> -->
+    <!--     &lt;!&ndash; <typeAlias type="com.fpc.Entity.User" alias="_User"/> &ndash;&gt; -->
+    <!--     <package name="com.fpc.Entity"/> -->
+    <!-- </typeAliases> -->
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <!-- 配置数据库连接信息 -->
+            <dataSource type="POOLED">
+                <!-- value属性值引用mysql.properties配置文件中配置的值 -->
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!-- 映射方法一:一个一个配置 -->
+        <!-- 注册userMapper.xml文件，
+        userMapper.com.example.mapper这个包下，所以resource写成com/example/mapper/UserMapper.xml-->
+        <!-- <mapper resource="com/example/mapper/UserMapper.xml"/> -->
+        <!-- <mapper class="com.example.mapper.UserMapper"/> -->
+
+        <!-- 映射方法二:扫描包 -->
+        <!-- 第1和2都不行,第3才可以 -->
+        <!-- <package name="com.example.mapper"/> -->
+        <!-- <mapper resource="com/example/mapper/UserMapper.xml"/> -->
+        <mapper resource="mapper/UserMapper.xml"/>
+    </mappers>
+
+</configuration>
