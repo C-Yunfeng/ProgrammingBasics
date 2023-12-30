@@ -7,3 +7,8 @@
 - AJAX
 - JavaScript
 
+## 2023
+
+- JSP
+- NGINX
+
