@@ -1,3 +1,18 @@
+### 基本命令
+
+```bash
+# 启动
+nginx
+# 重新加载配置文件
+nginx -s reload
+# 停止nginx(或者查到PID并kill)
+nginx -s stop
+```
+
+
+
+
+
 ### 反向代理
 
 ##### 启动两个TOMCAT服务
@@ -62,6 +77,27 @@ sudo pfctl -e
 四种分配策略
 
 - 轮循
-- weight
+-  weight
 - hash
 - fair
+
+
+
+### 高可用
+
+##### 配置主备nginx
+
+1. 开放8011端口,用于nginx8011
+
+   ```bash
+   
+   fs
+   
+   ```
+
+2. 配置nginx8011
+3. 启动nginx8011
+
+##### 配置keepalived
+
+##### 配置VIP
