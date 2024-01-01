@@ -38,3 +38,39 @@
 docker run --hostname=751ed16e6572 env=MYSQL_ROOT_PASSWORD=123456789 --volume=/Users/chenyunfeng/Projects/docker_data/mysql-master/conf/my.cnf:/etc/mysql/my.cnf --volume=/var/lib/mysql -p 3307:3306 --restart=no --runtime=runc -d mysql:8.0.29
 ```
 
+
+
+##### 自定义镜像
+
+> 参考文件见`Dockerfile_example/jar_demo/Dockerfile`
+
+构建jar镜像
+
+```bash
+pwd
+### /Users/chenyunfeng/Github_Pj/ProgrammingBasics/Docker/Dockerfile_example/jar_demo
+# 构建镜像
+docker build -t docker-jar-demo .
+# 启动容器
+docker run -d --name djd -p 8080:8080 docker-jar-demo
+# 查看日志
+docker logs -t djd
+# 访问http://localhost:8080/hello/count
+```
+
+
+
+##### docker network connect heima nginx8012网络访问
+
+```bash
+# 创建网桥(inspect命令的Networks参数中有结果)
+docker network create heima
+# 将已有容器加入到网段heima中
+docker network connect heima djd
+docker network connect heima nginx8012
+# 进入容器djd
+docker exec -it djd bash
+# 测试通过容器名访问网络
+ping nginx8012
+```
+

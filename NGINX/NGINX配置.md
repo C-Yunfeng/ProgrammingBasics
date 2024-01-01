@@ -101,3 +101,7 @@ sudo pfctl -e
 ##### 配置keepalived
 
 ##### 配置VIP
+
+### 一些HTTP状态码
+
+- 502 Bad Gateway: 通过nginx访问tomcat, 但是tomcat没启动
