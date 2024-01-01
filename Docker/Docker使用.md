@@ -85,3 +85,15 @@ docker run -d -p 8083:8080 --name jsp_cont8581 jsp_image8581
 # 注意因为war包没改名,所以访问时上下文路径要写JSP-1.0-SNAPSHOT,即容器中/usr/local/tomcat/webapps里的目录
 ```
 
+##### DockerCompose
+
+> 所需文件见目录`./Dockerfile_example/DockerCompose`
+
+```bash
+docker compose up -d
+# 分别访问
+# http://localhost:8080/hello/count
+# http://localhost:8013/a.html
+docker compose down
+```
+

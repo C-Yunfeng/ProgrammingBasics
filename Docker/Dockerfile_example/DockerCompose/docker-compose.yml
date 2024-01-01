@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  djd_compose:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: djd_compose
+    ports:
+      - "8080:8080"
+    networks:
+      - hm-net
+  nginx8013:
+    image: nginx
+    container_name: nginx8013
+    ports:
+      - "8013:80"
+    volumes:
+      - "./nginx/html:/usr/share/nginx/html"
+    depends_on:
+      - djd_compose
+    networks:
+      - hm-net
+networks:
+  hm-net:
+    name: heima
