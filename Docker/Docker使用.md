@@ -42,7 +42,7 @@ docker run --hostname=751ed16e6572 env=MYSQL_ROOT_PASSWORD=123456789 --volume=/U
 
 ##### 自定义镜像
 
-> 参考文件见`Dockerfile_example/jar_demo/Dockerfile`
+> 所需文件见`./Dockerfile_example/jar_demo/Dockerfile`
 
 构建jar镜像
 
@@ -60,7 +60,7 @@ docker logs -t djd
 
 
 
-##### docker network connect heima nginx8012网络访问
+##### 网络访问
 
 ```bash
 # 创建网桥(inspect命令的Networks参数中有结果)
@@ -72,5 +72,16 @@ docker network connect heima nginx8012
 docker exec -it djd bash
 # 测试通过容器名访问网络
 ping nginx8012
+```
+
+##### 部署war项目
+
+> 所需文件见目录`./Dockerfile_example/JSP_demo`
+
+```bash
+docker build -t jsp_image8581 .
+docker run -d -p 8083:8080 --name jsp_cont8581 jsp_image8581
+# 访问http://localhost:8083/JSP-1.0-SNAPSHOT/index.jsp
+# 注意因为war包没改名,所以访问时上下文路径要写JSP-1.0-SNAPSHOT,即容器中/usr/local/tomcat/webapps里的目录
 ```
 
