@@ -119,5 +119,93 @@ spec:
 
 
 
+##### Deployment
 
+> 控制Pod，使Pod拥有多副本，自愈，扩缩容等能力
+
+```bash
+# 清除所有Pod，比较下面两个命令有何不同效果？
+kubectl run mynginx --image=nginx
+
+kubectl create deployment mytomcat --image=tomcat:8.5.68
+# 自愈能力
+# delete pod后会自动起一个新的pod,需要执行delete deploy
+```
+
+- 多副本
+
+```bash
+kubectl create deployment my-dep --image=nginx --replicas=3
+```
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: my-dep
+  name: my-dep
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-dep
+  template:
+    metadata:
+      labels:
+        app: my-dep
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+```
+
+- 扩所容
+
+```bash
+kubectl scale --replicas=5 deployment/my-dep
+
+kubectl edit deployment my-dep
+#修改 replicas,保存并退出
+```
+
+- 故障转移
+
+```bash
+# 故障允许事件默认为5m
+# 把node1的服务器关机,则node1上的pod会过5分钟被k8s检测到不正常,则会在其他node上新建pod
+```
+
+![image-20240103224038589](assets/Kubernetes使用/image-20240103224038589.png)
+
+- 滚动更新: 新的Pod状态为running之后, 则删除上一个Pod
+
+```bash
+# 更新Pod使用的镜像
+kubectl set image deployment/my-dep nginx=nginx:1.16.1 --record
+```
+
+![image-20240103224643056](assets/Kubernetes使用/image-20240103224643056.png)
+
+![image-20240103224208226](assets/Kubernetes使用/image-20240103224208226.png)
+
+- 版本回退
+
+```bash
+#历史记录
+kubectl rollout history deployment/my-dep
+
+#查看某个历史详情
+kubectl rollout history deployment/my-dep --revision=2
+
+#回滚(回到上次)
+kubectl rollout undo deployment/my-dep
+
+#回滚(回到指定版本)
+kubectl rollout undo deployment/my-dep --to-revision=2
+```
+
+##### 工作负载
+
+![image-20240103225023619](assets/Kubernetes使用/image-20240103225023619.png)
 
