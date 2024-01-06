@@ -19,6 +19,8 @@ kubectl get pods -A
 
 #获取访问令牌
 kubectl -n kubernetes-dashboard get secret $(kubectl -n kubernetes-dashboard get sa/admin-user -o jsonpath="{.secrets[0].name}") -o go-template="{{.data.token | base64decode}}"
+
+eyJhbGciOiJSUzI1NiIsImtpZCI6ImZaR1pnSUg2MmhLc3lsOFQ3cmJqMzJGekh5eEdXQ1ZuU0tLNG1mY3Njek0ifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLXhycDJxIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI0YWYzNWYwYS0yMzczLTQyMTYtYTMwZS0zNzUxOWQxMWMxNmIiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZXJuZXRlcy1kYXNoYm9hcmQ6YWRtaW4tdXNlciJ9.fdktl1RKK_SbDS82wxnGO16uD3Xy_lMqpSKMZaclxu2u8jJ4h0dy17Sk4BiGIi2kcrohvN0MRxXgQ6vG03YGRNxajr-keL7tmtDTRReP3orRU0VjAvuOZJ9kMnUeYx-03ORwMu8VwKsW5j_k_WXXorJHgSIPAIBNYCjATn0S25hBekrquXt0CPME_el3CsO55xUloyzX83qKgJ5VosprAs-ds2R5_rf7E8Tv3GfS_NSgHSvLXmcbQSngLBgWXfwSF3pq3jz0J0szjeJjdqBeEZq93oB3nCi6Mo1fth0-HmwVBenZ9Bn5zrSjgk_072-qx6PoWgOakAuUG1TtmpofRQ
 ```
 
 
@@ -459,3 +461,124 @@ spec:
 
 ![image-20240106151655659](assets/Kubernetes使用/image-20240106151655659.png)
 
+##### 存储抽象
+
+- 原声方式挂载
+
+- PV/PVC
+
+  ```bash
+  kubectl apply -f pv.yaml
+  kubectl apply -f pvc.yaml
+  kubectl get pv
+  ```
+
+- 创建P V
+
+  ```yaml
+  apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: pv01-10m
+  spec:
+    capacity:
+      storage: 10M
+    accessModes:
+      - ReadWriteMany
+    storageClassName: nfs
+    nfs:
+      path: /nfs/data/01
+      server: 172.31.0.4
+  ---
+  apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: pv02-1gi
+  spec:
+    capacity:
+      storage: 1Gi
+    accessModes:
+      - ReadWriteMany
+    storageClassName: nfs
+    nfs:
+      path: /nfs/data/02
+      server: 172.31.0.4
+  ---
+  apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: pv03-3gi
+  spec:
+    capacity:
+      storage: 3Gi
+    accessModes:
+      - ReadWriteMany
+    storageClassName: nfs
+    nfs:
+      path: /nfs/data/03
+      server: 172.31.0.4
+  ```
+
+- 创建PVC
+
+  ```yaml
+  kind: PersistentVolumeClaim
+  apiVersion: v1
+  metadata:
+    name: nginx-pvc
+  spec:
+    accessModes:
+      - ReadWriteMany
+    resources:
+      requests:
+        storage: 200Mi
+    storageClassName: nfs
+  ```
+
+  
+
+- Pod绑定PVC
+
+  ```yaml
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app: nginx-deploy-pvc
+    name: nginx-deploy-pvc
+  spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        app: nginx-deploy-pvc
+    template:
+      metadata:
+        labels:
+          app: nginx-deploy-pvc
+      spec:
+        containers:
+        - image: nginx
+          name: nginx
+          volumeMounts:
+          - name: html
+            mountPath: /usr/share/nginx/html
+        volumes:
+          - name: html
+            persistentVolumeClaim:
+              claimName: nginx-pvc
+  ```
+
+- ConfigMap
+
+  ```yaml
+  apiVersion: v1
+  data:    #data是所有真正的数据，key：默认是文件名   value：配置文件的内容
+    redis.conf: |
+      appendonly yes
+  kind: ConfigMap
+  metadata:
+    name: redis-conf
+    namespace: default
+  ```
+
+  
