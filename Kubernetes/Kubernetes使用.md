@@ -209,3 +209,253 @@ kubectl rollout undo deployment/my-dep --to-revision=2
 
 ![image-20240103225023619](assets/Kubernetes使用/image-20240103225023619.png)
 
+##### Service
+
+- ClusterIp
+
+```bash
+# 等同于没有--type的
+kubectl expose deployment my-dep --port=8000 --target-port=80 --type=ClusterIP
+# 在Pod中通过域名访问
+curl my-dep.default.svc:80
+# 删除svc
+kubectl delete service my-dep
+```
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: my-dep
+  name: my-dep
+spec:
+  ports:
+  - port: 8000
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: my-dep
+  type: ClusterIP
+```
+
+- NodePort
+
+所有的Pod都会开通同一个NodePort端口
+
+```bash
+kubectl expose deployment my-dep --port=8000 --target-port=80 --type=NodePort
+# 在集群内,通过ClusterIP:Port访问(此处ClusterIP是NodePort的IP)
+curl 10.96.231.175:8000
+# 通过公网IP+NodePort访问,是请求随机Pod服务
+curl 139.198.187.134:32039
+```
+
+![image-20240106143952899](assets/Kubernetes使用/image-20240106143952899.png)
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: my-dep
+  name: my-dep
+spec:
+  ports:
+  - port: 8000
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: my-dep
+  type: NodePort
+```
+
+> NodePort范围在 30000-32767 之间
+
+##### Ingress
+
+- 理论
+
+![image-20240106141844582](assets/Kubernetes使用/image-20240106141844582.png)
+
+```bash
+wget https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.47.0/deploy/static/provider/baremetal/deploy.yaml
+
+#修改镜像
+vi deploy.yaml
+#将image的值改为如下值：
+registry.cn-hangzhou.aliyuncs.com/lfy_k8s_images/ingress-nginx-controller:v0.46.0
+
+# 检查安装的结果
+kubectl get pod,svc -n ingress-nginx
+
+# 最后别忘记把svc暴露的端口要放行
+```
+
+实际上是使用nginx+NodePort实现的
+
+![image-20240106142550230](assets/Kubernetes使用/image-20240106142550230.png)
+
+```bash
+# 通过公网IP+Ingress访问,是直接请求Ingress的Nginx服务
+curl 139.198.187.134:32180
+```
+
+![image-20240106144208790](assets/Kubernetes使用/image-20240106144208790.png)
+
+- 实战
+
+![image-20240106150659911](assets/Kubernetes使用/image-20240106150659911.png)
+
+服务配置
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hello-server
+  template:
+    metadata:
+      labels:
+        app: hello-server
+    spec:
+      containers:
+      - name: hello-server
+        image: registry.cn-hangzhou.aliyuncs.com/lfy_k8s_images/hello-server
+        ports:
+        - containerPort: 9000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx-demo
+  name: nginx-demo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx-demo
+  template:
+    metadata:
+      labels:
+        app: nginx-demo
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: nginx-demo
+  name: nginx-demo
+spec:
+  selector:
+    app: nginx-demo
+  ports:
+  - port: 8000
+    protocol: TCP
+    targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: hello-server
+  name: hello-server
+spec:
+  selector:
+    app: hello-server
+  ports:
+  - port: 8000
+    protocol: TCP
+    targetPort: 9000
+```
+
+Ingress配置
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress  
+metadata:
+  name: ingress-host-bar
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "hello.atguigu.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: hello-server
+            port:
+              number: 8000
+  - host: "demo.atguigu.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/nginx"  # 把请求会转给下面的服务，下面的服务一定要能处理这个路径，不能处理就是404(可以在Pod里给nginx添加nginx资源,就可以访问到了)
+        backend:
+          service:
+            name: nginx-demo  ## java，比如使用路径重写，去掉前缀nginx
+            port:
+              number: 8000
+```
+
+```bash
+# 修改配置文件
+kubectl edit ing ingress-host-bar
+```
+
+- 路径重写
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress  
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  name: ingress-host-bar
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "hello.atguigu.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: hello-server
+            port:
+              number: 8000
+  - host: "demo.atguigu.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/nginx(/|$)(.*)"  # 把请求会转给下面的服务，下面的服务一定要能处理这个路径，不能处理就是404
+        backend:
+          service:
+            name: nginx-demo  ## java，比如使用路径重写，去掉前缀nginx
+            port:
+              number: 8000
+```
+
+- 流量限制
+
+```yaml
+```
+
+- K8S总结-网络模型
+
+![image-20240106151655659](assets/Kubernetes使用/image-20240106151655659.png)
+
