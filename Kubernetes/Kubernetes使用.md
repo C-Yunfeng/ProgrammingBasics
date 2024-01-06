@@ -570,6 +570,16 @@ spec:
 
 - ConfigMap
 
+  ```bash
+  vi redis.conf
+  appendonly yes
+  :wq
+  
+  # 创建配置，redis保存到k8s的etcd；
+  kubectl create cm redis-conf --from-file=redis.conf
+  kubectl get cm redis-conf -oyaml
+  ```
+
   ```yaml
   apiVersion: v1
   data:    #data是所有真正的数据，key：默认是文件名   value：配置文件的内容
@@ -581,4 +591,70 @@ spec:
     namespace: default
   ```
 
+  ![image-20240106164008153](assets/Kubernetes使用/image-20240106164008153.png)
+
+  ```yaml
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: redis
+  spec:
+    containers:
+    - name: redis
+      image: redis
+      command:
+        - redis-server
+        - "/redis-master/redis.conf"  #指的是redis容器内部的位置
+      ports:
+      - containerPort: 6379
+      volumeMounts:
+      - mountPath: /data
+        name: data
+      - mountPath: /redis-master
+        name: config
+    volumes:
+      - name: data
+        emptyDir: {}
+      - name: config
+        configMap:
+          name: redis-conf
+          items:
+          - key: redis.conf
+            path: redis.conf
+  ```
+
+  ```bash
+  kubectl edip cm redis-conf
+  ```
+
+- Secret
+
+  ```bash
+  kubectl create secret docker-registry leifengyang-docker \
+  --docker-username=leifengyang \
+  --docker-password=Lfy123456 \
+  --docker-email=534096094@qq.com
   
+  ##命令格式
+  kubectl create secret docker-registry regcred \
+    --docker-server=<你的镜像仓库服务器> \
+    --docker-username=<你的用户名> \
+    --docker-password=<你的密码> \
+    --docker-email=<你的邮箱地址>
+  ```
+
+  ```yaml
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: private-nginx
+  spec:
+    containers:
+    - name: private-nginx
+      image: leifengyang/guignginx:v1.0
+    imagePullSecrets:
+    - name: leifengyang-docker
+  ```
+
+  ![image-20240106170233216](assets/Kubernetes使用/image-20240106170233216.png)
+
